@@ -71,7 +71,7 @@ uint32_t IRAM_ATTR HOT AcDimmerDataStore::timer_intr(uint32_t now) {
 /// Run timer interrupt code and return in how many µs the next event is expected
 uint32_t IRAM_ATTR HOT timer_interrupt() {
   // run at least with 1kHz
-  uint32_t min_dt_us = 1000;
+  uint32_t min_dt_us = 2000;
   uint32_t now = micros();
   for (auto *dimmer : all_dimmers) {
     if (dimmer == nullptr) {

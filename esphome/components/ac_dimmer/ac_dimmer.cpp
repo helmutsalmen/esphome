@@ -157,6 +157,7 @@ void IRAM_ATTR HOT AcDimmerDataStore::s_timer_intr() { timer_interrupt(); }
 #endif
 
 void AcDimmer::setup() {
+  ESP_LOGCONFIG("Dimmer", "===================");
   // extend all_dimmers array with our dimmer
 
   // Need to be sure the zero cross pin is setup only once, ESP8266 fails and ESP32 seems to fail silently

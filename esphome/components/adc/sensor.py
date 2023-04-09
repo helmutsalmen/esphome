@@ -23,6 +23,12 @@ from . import (
     ESP32_VARIANT_ADC2_PIN_TO_CHANNEL,
     validate_adc_pin,
 )
+'''
+    CONF_LOG_ON_CHANGE,
+    CONF_MIN_CHANGE,
+'''
+CONF_LOG_ON_CHANGE = "log_on_change"
+CONF_MIN_CHANGE = "min_change"
 
 AUTO_LOAD = ["voltage_sampler"]
 

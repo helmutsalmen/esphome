@@ -55,8 +55,8 @@ class ADCSensor : public sensor::Sensor, public PollingComponent, public voltage
  protected:
   InternalGPIOPin *pin_;
   bool output_raw_{false};
-  bool log_on_change_{true};
-  float min_change_{0.1};
+  bool log_on_change_{false};
+  float min_change_{0.0};
   float last_sample_{-1.0};
 
 #ifdef USE_RP2040

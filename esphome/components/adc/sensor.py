@@ -23,10 +23,7 @@ from . import (
     ESP32_VARIANT_ADC2_PIN_TO_CHANNEL,
     validate_adc_pin,
 )
-'''
-    CONF_LOG_ON_CHANGE,
-    CONF_MIN_CHANGE,
-'''
+
 CONF_LOG_ON_CHANGE = "log_on_change"
 CONF_MIN_CHANGE = "min_change"
 
@@ -73,7 +70,7 @@ CONFIG_SCHEMA = cv.All(
             cv.Required(CONF_PIN): validate_adc_pin,
             cv.Optional(CONF_RAW, default=False): cv.boolean,
             cv.Optional(CONF_LOG_ON_CHANGE, default=False): cv.boolean,
-            cv.Optional(CONF_MIN_CHANGE, default=0.0): cv.positive_float,
+            cv.Optional(CONF_MIN_CHANGE, default=0.0): cv.float_range(0.0, 1.0),
             cv.SplitDefault(CONF_ATTENUATION, esp32="0db"): cv.All(
                 cv.only_on_esp32, cv.enum(ATTENUATION_MODES, lower=True)
             ),
@@ -106,6 +103,9 @@ async def to_code(config):
             cg.add(var.set_autorange(cg.global_ns.true))
         else:
             cg.add(var.set_attenuation(attenuation))
+
+    (val := config.get(CONF_LOG_ON_CHANGE)) and cg.add(var.set_log_on_change(val))
+    (val := config.get(CONF_MIN_CHANGE)) and cg.add(var.set_min_change(val))
 
     if CORE.is_esp32:
         variant = get_esp32_variant()

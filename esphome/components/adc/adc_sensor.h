@@ -39,8 +39,8 @@ class ADCSensor : public sensor::Sensor, public PollingComponent, public voltage
   float get_setup_priority() const override;
   void set_pin(InternalGPIOPin *pin) { this->pin_ = pin; }
   void set_output_raw(bool output_raw) { output_raw_ = output_raw; }
-  void set_log_on_change(bool log_on_change) { log_on_change_ = log_on_change; }
-  void set_min_change(float min_change) { min_change_ = min_change; }
+  void set_log_on_change_only(bool log_on_change_only) { log_on_change_only_ = log_on_change_only; }
+  void set_change_threshold(float change_threshold) { change_threshold_ = change_threshold; }
 
   float sample() override;
 
@@ -55,8 +55,8 @@ class ADCSensor : public sensor::Sensor, public PollingComponent, public voltage
  protected:
   InternalGPIOPin *pin_;
   bool output_raw_{false};
-  bool log_on_change_{false};
-  float min_change_{0.0};
+  bool log_on_change_only_{false};
+  float change_threshold_{0.0};
   float last_sample_{-1.0};
 
 #ifdef USE_RP2040

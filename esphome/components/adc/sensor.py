@@ -24,8 +24,8 @@ from . import (
     validate_adc_pin,
 )
 
-CONF_LOG_ON_CHANGE = "log_on_change"
-CONF_MIN_CHANGE = "min_change"
+CONF_LOG_ON_CHANGE_ONLY = "log_on_change_only"
+CONF_CHANGE_THRESHOLD = "change_threshold"
 
 AUTO_LOAD = ["voltage_sampler"]
 
@@ -69,8 +69,8 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.Required(CONF_PIN): validate_adc_pin,
             cv.Optional(CONF_RAW, default=False): cv.boolean,
-            cv.Optional(CONF_LOG_ON_CHANGE, default=False): cv.boolean,
-            cv.Optional(CONF_MIN_CHANGE, default=0.0): cv.float_range(0.0, 1.0),
+            cv.Optional(CONF_LOG_ON_CHANGE_ONLY, default=False): cv.boolean,
+            cv.Optional(CONF_CHANGE_THRESHOLD, default=0.0): cv.float_range(0.0, 1.0),
             cv.SplitDefault(CONF_ATTENUATION, esp32="0db"): cv.All(
                 cv.only_on_esp32, cv.enum(ATTENUATION_MODES, lower=True)
             ),
@@ -104,8 +104,8 @@ async def to_code(config):
         else:
             cg.add(var.set_attenuation(attenuation))
 
-    (val := config.get(CONF_LOG_ON_CHANGE)) and cg.add(var.set_log_on_change(val))
-    (val := config.get(CONF_MIN_CHANGE)) and cg.add(var.set_min_change(val))
+    (val := config.get(CONF_LOG_ON_CHANGE_ONLY)) and cg.add(var.set_log_on_change_only(val))
+    (val := config.get(CONF_CHANGE_THRESHOLD)) and cg.add(var.set_change_threshold(val))
 
     if CORE.is_esp32:
         variant = get_esp32_variant()

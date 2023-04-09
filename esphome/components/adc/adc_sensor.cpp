@@ -145,9 +145,9 @@ void ADCSensor::dump_config() {
 float ADCSensor::get_setup_priority() const { return setup_priority::DATA; }
 void ADCSensor::update() {
   float value_v = this->sample();
-  if (log_on_change_ == false ||
-      value_v > this->last_sample_ + this->min_change_ ||
-      value_v < this->last_sample_ - this->min_change_) {
+  if (log_on_change_only_ == false ||
+      value_v > this->last_sample_ + this->change_threshold_ ||
+      value_v < this->last_sample_ - this->change_threshold_) {
     this->last_sample_ = value_v;
     ESP_LOGV(TAG, "'%s': Got voltage=%.4fV", this->get_name().c_str(), value_v);
     this->publish_state(value_v);

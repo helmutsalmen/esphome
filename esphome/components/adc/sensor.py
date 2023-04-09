@@ -11,6 +11,8 @@ from esphome.const import (
     CONF_PIN,
     CONF_RAW,
     CONF_WIFI,
+    CONF_LOG_ON_CHANG,
+    CONF_MIN_CHANGE,
     DEVICE_CLASS_VOLTAGE,
     STATE_CLASS_MEASUREMENT,
     UNIT_VOLT,
@@ -64,6 +66,8 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.Required(CONF_PIN): validate_adc_pin,
             cv.Optional(CONF_RAW, default=False): cv.boolean,
+            cv.Optional(CONF_LOG_ON_CHANGE, default=False): cv.boolean,
+            cv.Optional(CONF_MIN_CHANGE, default=0.0): cv.positive_float,
             cv.SplitDefault(CONF_ATTENUATION, esp32="0db"): cv.All(
                 cv.only_on_esp32, cv.enum(ATTENUATION_MODES, lower=True)
             ),

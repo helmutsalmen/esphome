@@ -11,8 +11,6 @@ from esphome.const import (
     CONF_PIN,
     CONF_RAW,
     CONF_WIFI,
-    CONF_LOG_ON_CHANGE,
-    CONF_MIN_CHANGE,
     DEVICE_CLASS_VOLTAGE,
     STATE_CLASS_MEASUREMENT,
     UNIT_VOLT,
